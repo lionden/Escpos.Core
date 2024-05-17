@@ -34,6 +34,16 @@ namespace ESCPOS_NET.Emitters
             return Print(line.Replace("\r", string.Empty).Replace("\n", string.Empty) + "\n");
         }
 
+        public virtual byte[] PrintLine() => PrintLine(null);
+
+        public virtual byte[] PrintLine(bool prerequsite, string line)
+        {
+            if (prerequsite)
+                return PrintLine(line);
+            else
+                return default;
+        }
+
         public virtual byte[] FeedLines(int lineCount) => new byte[] { Cmd.ESC, Whitespace.FeedLines, (byte)lineCount };
 
         public virtual byte[] FeedLinesReverse(int lineCount) => new byte[] { Cmd.ESC, Whitespace.FeedLinesReverse, (byte)lineCount };
